@@ -1,0 +1,149 @@
+import java.util.Scanner;
+
+// User Class
+class User {
+    private String name;
+    private String phone;
+
+    public User(String name, String phone) {
+        this.name = name;
+        this.phone = phone;
+    }
+
+    public String getName() {
+        return name;
+    }
+
+    public String getPhone() {
+        return phone;
+    }
+}
+
+// Abstract Cab Class
+abstract class Cab {
+    protected String cabType;
+    protected double ratePerKm;
+
+    public Cab(String cabType, double ratePerKm) {
+        this.cabType = cabType;
+        this.ratePerKm = ratePerKm;
+    }
+
+    public abstract double calculateFare(double distance);
+
+    public String getCabType() {
+        return cabType;
+    }
+
+    public double getRatePerKm() {
+        return ratePerKm;
+    }
+}
+
+// MiniCab Class
+class MiniCab extends Cab {
+    public MiniCab() {
+        super("Mini", 10.0);
+    }
+
+    @Override
+    public double calculateFare(double distance) {
+        return ratePerKm * distance;
+    }
+}
+
+// SedanCab Class
+class SedanCab extends Cab {
+    public SedanCab() {
+        super("Sedan", 15.0);
+    }
+
+    @Override
+    public double calculateFare(double distance) {
+        return ratePerKm * distance;
+    }
+}
+
+// SuvCab Class
+class SuvCab extends Cab {
+    public SuvCab() {
+        super("SUV", 20.0);
+    }
+
+    @Override
+    public double calculateFare(double distance) {
+        return ratePerKm * distance;
+    }
+}
+
+// Booking Class
+class Booking {
+    private User user;
+    private Cab cab;
+    private double distance;
+
+    public Booking(User user, Cab cab, double distance) {
+        this.user = user;
+        this.cab = cab;
+        this.distance = distance;
+    }
+
+    public void showBookingDetails() {
+        System.out.println("\n------ Booking Summary ------");
+        System.out.println("Passenger Name: " + user.getName());
+        System.out.println("Phone: " + user.getPhone());
+        System.out.println("Cab Type: " + cab.getCabType());
+        System.out.println("Distance: " + distance + " km");
+        System.out.println("Fare Rate: Rs. " + cab.getRatePerKm() + "/km");
+        System.out.println("Total Fare: Rs. " + cab.calculateFare(distance));
+        System.out.println("-----------------------------");
+    }
+}
+
+// Main Class
+public class CabBookingSystem {
+    public static void main(String[] args) {
+        Scanner scanner = new Scanner(System.in);
+
+        System.out.println("Welcome to SmartCab Booking System!");
+
+        System.out.print("Enter your name: ");
+        String name = scanner.nextLine();
+
+        System.out.print("Enter your phone number: ");
+        String phone = scanner.nextLine();
+
+        User user = new User(name, phone);
+
+        System.out.println("\nSelect Cab Type:");
+        System.out.println("1. Mini (Rs. 10/km)");
+        System.out.println("2. Sedan (Rs. 15/km)");
+        System.out.println("3. SUV (Rs. 20/km)");
+        System.out.print("Enter your choice: ");
+        int choice = scanner.nextInt();
+
+        Cab selectedCab;
+        switch (choice) {
+            case 1:
+                selectedCab = new MiniCab();
+                break;
+            case 2:
+                selectedCab = new SedanCab();
+                break;
+            case 3:
+                selectedCab = new SuvCab();
+                break;
+            default:
+                System.out.println("Invalid choice. Defaulting to Mini Cab.");
+                selectedCab = new MiniCab();
+        }
+
+        System.out.print("Enter distance to travel (in km): ");
+        double distance = scanner.nextDouble();
+
+        Booking booking = new Booking(user, selectedCab, distance);
+        booking.showBookingDetails();
+
+        scanner.close();
+    }
+}
