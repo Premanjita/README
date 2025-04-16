@@ -1,196 +1,95 @@
-Here's a detailed explanation of a Cab Booking System Java project. This is a typical beginner-to-intermediate level project that helps you understand Object-Oriented Programming (OOP), file handling or database use, and basic Java concepts like classes, objects, inheritance, and collections.
+Here's a sample README file for a Cab Booking Java Project. You can customize it based on your specific project details:
 
 
 ---
 
-Project Title: Cab Booking System in Java
+Cab Booking System - Java Project
 
+Project Overview
 
----
+The Cab Booking System is a console-based Java application designed to simulate the core functionalities of an online cab booking platform. Users can register, log in, book a cab, view their booking history, and manage their profiles. Admins can manage users, drivers, and ride records.
 
-Objective:
+Features
 
-To create a simple console or GUI-based application that allows users to book a cab, calculate fare, track rides, and manage drivers and users.
+User Registration & Login
 
+Admin Panel
 
----
+Cab Booking
 
-Modules of the Project:
+View/Cancel Bookings
 
-1. User Module
+Assign Drivers
 
-Features:
+Ride Fare Calculation
 
-Register/Login
+Booking History
 
-Book a cab
+Data Persistence using Files/Database
 
-View booking history
 
-Cancel booking
+Technologies Used
 
+Java (Core Java, Object-Oriented Programming)
 
+File Handling or MySQL (Optional, based on implementation)
 
-2. Driver Module
+Eclipse/IntelliJ IDEA (Recommended IDE)
 
-Features:
+JDK 8 or above
 
-Add new drivers
 
-Update availability
+Folder Structure
 
-View assigned rides
+CabBookingSystem/
+│
+├── src/
+│   ├── model/          # User, Driver, Cab, Booking classes
+│   ├── service/        # BookingService, UserService, AdminService
+│   ├── util/           # Helper methods or Database connection
+│   └── Main.java       # Entry point
+│
+├── README.md
+├── requirements.txt    # (if using MySQL or any libraries)
+└── data/               # Contains text files or DB schema
 
-Accept/decline ride
+How to Run
 
+1. Clone or Download the repository.
 
 
-3. Admin Module
+2. Open the project in your preferred Java IDE.
 
-Features:
 
-View all users and drivers
+3. Compile all classes.
 
-Manage bookings
 
-View reports/statistics
+4. Run the Main.java file.
 
 
 
-4. Booking Module
+If using a database:
 
-Features:
+Set up the database using the cab_booking.sql file.
 
-Search for available cabs
+Configure DB credentials in a config file or connection class.
 
-Calculate fare based on distance and time
 
-Assign nearest driver
+Future Enhancements
 
-Generate booking ID
+GUI using JavaFX/Swing
 
+Online payment integration
 
+Real-time cab tracking
 
+REST API Integration
 
----
 
-Technologies Used:
+Author
 
-Language: Java
+Premanjita Barua
+Student of CSE Department 
+University of Science and Technology Chittagong. 
 
-Optional GUI: Java Swing/JavaFX or just use Console-based
-
-Database: MySQL / or file handling using .txt or .csv
-
-
-
----
-
-Core Java Concepts Used:
-
-Classes and Objects: For Users, Drivers, Bookings
-
-Inheritance: Admin, User, and Driver might inherit from a common Person class
-
-Polymorphism: Method overriding for fare calculation (e.g., different cab types)
-
-Encapsulation: Private data with getters/setters
-
-Collections: ArrayList, HashMap to store data in memory
-
-Exception Handling: To handle invalid inputs, booking errors
-
-File I/O or JDBC: To store and retrieve user and booking data
-
-
-
----
-
-Sample Classes:
-
-1. User Class
-
-public class User {
-    private String userId;
-    private String name;
-    private String phone;
-
-    public void bookCab(String pickup, String drop) {
-        // logic for booking
-    }
-
-    public void cancelBooking(String bookingId) {
-        // logic to cancel
-    }
-}
-
-2. Driver Class
-
-public class Driver {
-    private String driverId;
-    private String name;
-    private boolean available;
-
-    public void acceptRide(String bookingId) {
-        // accept ride
-    }
-}
-
-3. Booking Class
-
-public class Booking {
-    private String bookingId;
-    private User user;
-    private Driver driver;
-    private double fare;
-    private String pickupLocation;
-    private String dropLocation;
-
-    public double calculateFare(int distance) {
-        return distance * 10.0; // example fare calculation
-    }
-}
-
-
----
-
-How the Booking Works (Logic Flow):
-
-1. User logs in and requests a ride.
-
-
-2. System checks for available drivers near pickup location.
-
-
-3. Calculates fare based on distance.
-
-
-4. Assigns a driver and creates a booking.
-
-
-5. Driver gets notification and accepts/rejects.
-
-
-6. Updates the booking status.
-
-
-
-
----
-
-Optional Features:
-
-Add map API for real-time location (advanced)
-
-Use GUI with Swing or JavaFX
-
-Payment module
-
-Email/SMS notification simulation
-
-
-
----
-
-Would you like the full code or a console-based example for this project?
 
