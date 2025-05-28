@@ -1,95 +1,205 @@
-public Booking(User user, Cab cab, double distance, String origin, String destination, String pickupTime) {
+import java.util.Scanner;
+
+class User {
+    private String name;
+    private String phone;
+
+    public User(String name, String phone) {
+        this.name = name;
+        this.phone = phone;
+    }
+
+    public String getName() {
+        return name;
+    }
+
+    public String getPhone() {
+        return phone;
+    }
+}
+
+abstract class Cab {
+    protected String cabType;
+    protected double ratePerKm;
+
+    public Cab(String cabType, double ratePerKm) {
+        this.cabType = cabType;
+        this.ratePerKm = ratePerKm;
+    }
+
+    public abstract double calculateFare(double distance);
+
+    public String getCabType() {
+        return cabType;
+    }
+
+    public double getRatePerKm() {
+        return ratePerKm;
+    }
+}
+
+class MiniCab extends Cab {
+    public MiniCab() {
+        super("Mini", 10.0);
+    }
+
+    @Override
+    public double calculateFare(double distance) {
+        return ratePerKm * distance;
+    }
+}
+
+class SedanCab extends Cab {
+    public SedanCab() {
+        super("Sedan", 15.0);
+    }
+
+    @Override
+    public double calculateFare(double distance) {
+        return ratePerKm * distance;
+    }
+}
+
+class SuvCab extends Cab {
+    public SuvCab() {
+        super("SUV", 20.0);
+    }
+
+    @Override
+    public double calculateFare(double distance) {
+        return ratePerKm * distance;
+    }
+}
+
+class Booking {
+    private User user;
+    private Cab cab;
+    private double distance;
+    private String pickUpLocation;
+    private String dropLocation;
+    private String pickUpTime;
+
+    public Booking(User user, Cab cab, double distance, String pickUpLocation, String dropLocation, String pickUpTime) {
         this.user = user;
         this.cab = cab;
         this.distance = distance;
-        this.origin = origin;
-        this.destination = destination;
-        this.pickupTime = pickupTime;
+        this.pickUpLocation = pickUpLocation;
+        this.dropLocation = dropLocation;
+        this.pickUpTime = pickUpTime;
     }
 
     public void showBookingDetails() {
         System.out.println("\n------ Booking Summary ------");
-        System.out.println("Passenger Name: " + user.getName());
-        System.out.println("Phone: " + user.getPhone());
-        System.out.println("Cab Type: " + cab.getCabType());
-        System.out.println("Pickup: " + origin);
-        System.out.println("Drop: " + destination);
-        System.out.println("Pickup Time: " + pickupTime);
-        System.out.println("Distance: " + String.format("%.2f", distance) + " km");
-        System.out.println("Fare Rate: Rs. " + cab.getRatePerKm() + "/km");
-        System.out.println("Total Fare: Rs. " + String.format("%.2f", cab.calculateFare(distance)));
+        System.out.println("Passenger Name   : " + user.getName());
+        System.out.println("Phone            : " + user.getPhone());
+        System.out.println("Cab Type         : " + cab.getCabType());
+        System.out.println("Pick-up Location : " + pickUpLocation);
+        System.out.println("Drop Location    : " + dropLocation);
+        System.out.println("Pick-up Time     : " + pickUpTime);
+        System.out.println("Distance         : " + distance + " km");
+        System.out.println("Fare Rate        : Rs. " + cab.getRatePerKm() + "/km");
+        System.out.println("Total Fare       : Rs. " + cab.calculateFare(distance));
+        System.out.println("Google Map Link  : https://www.google.com/maps/dir/" + pickUpLocation.replace(" ", "+") + "/" + dropLocation.replace(" ", "+"));
         System.out.println("-----------------------------");
     }
 }
 
-public class CabBookingSystem {
+public class ChittagongCabBooking {
     public static void main(String[] args) {
         Scanner scanner = new Scanner(System.in);
 
-        System.out.println("Welcome to SmartCab Booking System!");
+        String[] locations = {
+            "Agrabad",
+            "GEC Circle",
+            "New Market",
+            "Khulshi",
+            "Chawkbazar",
+            "Chittagong Railway Station"
+        };
+
+        double[] distances = {5.0, 7.5, 10.0, 12.0};
+
+        String[] times = {
+            "08:00 AM", "09:00 AM", "10:00 AM",
+            "11:00 AM", "12:00 PM", "01:00 PM",
+            "02:00 PM", "03:00 PM", "04:00 PM",
+            "05:00 PM", "06:00 PM", "07:00 PM"
+        };
+
+        System.out.println("Welcome to Chittagong Cab Booking System!");
+
         System.out.print("Enter your name: ");
         String name = scanner.nextLine();
 
         System.out.print("Enter your phone number: ");
         String phone = scanner.nextLine();
 
-        User user = new User(name, phone);
+        // Pick-up location selection
+        System.out.println("\nSelect Pick-up Location:");
+        for (int i = 0; i < locations.length; i++) {
+            System.out.println((i + 1) + ". " + locations[i]);
+        }
+        System.out.print("Enter your choice: ");
+        int pickUpChoice = scanner.nextInt();
+        String pickUpLocation = locations[pickUpChoice - 1];
 
+        // Drop location selection
+        System.out.println("\nSelect Drop Location:");
+        for (int i = 0; i < locations.length; i++) {
+            System.out.println((i + 1) + ". " + locations[i]);
+        }
+        System.out.print("Enter your choice: ");
+        int dropChoice = scanner.nextInt();
+        String dropLocation = locations[dropChoice - 1];
+
+        // Distance selection
+        System.out.println("\nSelect Estimated Distance:");
+        for (int i = 0; i < distances.length; i++) {
+            System.out.println((i + 1) + ". " + distances[i] + " km");
+        }
+        System.out.print("Enter your choice: ");
+        int distChoice = scanner.nextInt();
+        double distance = distances[distChoice - 1];
+
+        // Cab type selection
         System.out.println("\nSelect Cab Type:");
         System.out.println("1. Mini (Rs. 10/km)");
         System.out.println("2. Sedan (Rs. 15/km)");
         System.out.println("3. SUV (Rs. 20/km)");
         System.out.print("Enter your choice: ");
-        int choice = scanner.nextInt();
-        scanner.nextLine();
+        int cabChoice = scanner.nextInt();
+        scanner.nextLine(); // clear buffer
 
         Cab selectedCab;
-        switch (choice) {
-            case 1 -> selectedCab = new MiniCab();
-            case 2 -> selectedCab = new SedanCab();
-            case 3 -> selectedCab = new SuvCab();
-            default -> {
-                System.out.println("Invalid choice, selecting Mini Cab by default.");
+        switch (cabChoice) {
+            case 1:
                 selectedCab = new MiniCab();
-            }
+                break;
+            case 2:
+                selectedCab = new SedanCab();
+                break;
+            case 3:
+                selectedCab = new SuvCab();
+                break;
+            default:
+                System.out.println("Invalid choice. Defaulting to Mini.");
+                selectedCab = new MiniCab();
         }
 
-        String[] locations = {
-                "New Market, Chittagong",
-                "GEC Circle, Chittagong",
-                "Agrabad, Chittagong",
-                "Panchlaish, Chittagong",
-                "Bahaddarhat, Chittagong"
-        };
-
-        System.out.println("\nAvailable Locations in Chittagong:");
-        for (int i = 0; i < locations.length; i++) {
-            System.out.println((i + 1) + ". " + locations[i]);
+        // Pick-up time selection menu
+        System.out.println("\nSelect Pick-up Time:");
+        for (int i = 0; i < times.length; i++) {
+            System.out.println((i + 1) + ". " + times[i]);
         }
+        System.out.print("Enter your choice: ");
+        int timeChoice = scanner.nextInt();
+        scanner.nextLine(); // clear buffer
+        String pickUpTime = times[timeChoice - 1];
 
-        System.out.print("Select pickup location (1-5): ");
-        String origin = locations[scanner.nextInt() - 1];
-        scanner.nextLine();
-
-        System.out.print("Select drop location (1-5): ");
-        String destination = locations[scanner.nextInt() - 1];
-        scanner.nextLine();
-
-        System.out.print("Enter preferred pickup time (e.g., 10:30 AM): ");
-        String pickupTime = scanner.nextLine();
-
-        // 🔁 Using dummy/mock distance instead of Google API
-        double distance = getMockDistance(origin, destination);
-
-        Booking booking = new Booking(user, selectedCab, distance, origin, destination, pickupTime);
+        User user = new User(name, phone);
+        Booking booking = new Booking(user, selectedCab, distance, pickUpLocation, dropLocation, pickUpTime);
         booking.showBookingDetails();
 
         scanner.close();
-    }
-
-    public static double getMockDistance(String origin, String destination) {
-        // Just for testing, return a fixed or random value
-        if (origin.equals(destination)) return 1.0;
-        return Math.random() * 10 + 1; // Random distance between 1 and 11 km
     }
 }
